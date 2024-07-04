@@ -10,6 +10,8 @@
 		D001BA472C36BF8600CA5885 /* JTCacheStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D001BA3E2C36BF8600CA5885 /* JTCacheStore.framework */; };
 		D001BA4C2C36BF8600CA5885 /* JTCacheStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D001BA4B2C36BF8600CA5885 /* JTCacheStoreTests.swift */; };
 		D001BA4D2C36BF8600CA5885 /* JTCacheStore.h in Headers */ = {isa = PBXBuildFile; fileRef = D001BA412C36BF8600CA5885 /* JTCacheStore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D001BA572C36C15D00CA5885 /* CacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D001BA562C36C15D00CA5885 /* CacheStore.swift */; };
+		D001BA592C36CB9400CA5885 /* CacheStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D001BA582C36CB9400CA5885 /* CacheStoreTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +29,8 @@
 		D001BA412C36BF8600CA5885 /* JTCacheStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JTCacheStore.h; sourceTree = "<group>"; };
 		D001BA462C36BF8600CA5885 /* JTCacheStoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JTCacheStoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D001BA4B2C36BF8600CA5885 /* JTCacheStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JTCacheStoreTests.swift; sourceTree = "<group>"; };
+		D001BA562C36C15D00CA5885 /* CacheStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheStore.swift; sourceTree = "<group>"; };
+		D001BA582C36CB9400CA5885 /* CacheStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheStoreTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				D001BA412C36BF8600CA5885 /* JTCacheStore.h */,
+				D001BA562C36C15D00CA5885 /* CacheStore.swift */,
 			);
 			path = JTCacheStore;
 			sourceTree = "<group>";
@@ -78,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				D001BA4B2C36BF8600CA5885 /* JTCacheStoreTests.swift */,
+				D001BA582C36CB9400CA5885 /* CacheStoreTests.swift */,
 			);
 			path = JTCacheStoreTests;
 			sourceTree = "<group>";
@@ -144,6 +150,7 @@
 				TargetAttributes = {
 					D001BA3D2C36BF8600CA5885 = {
 						CreatedOnToolsVersion = 15.2;
+						LastSwiftMigration = 1520;
 					};
 					D001BA452C36BF8600CA5885 = {
 						CreatedOnToolsVersion = 15.2;
@@ -191,6 +198,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D001BA572C36C15D00CA5885 /* CacheStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,6 +206,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D001BA592C36CB9400CA5885 /* CacheStoreTests.swift in Sources */,
 				D001BA4C2C36BF8600CA5885 /* JTCacheStoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,6 +350,7 @@
 		D001BA512C36BF8600CA5885 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -364,6 +374,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -372,6 +383,7 @@
 		D001BA522C36BF8600CA5885 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -403,6 +415,7 @@
 		D001BA542C36BF8600CA5885 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 65QQ97XV3Q;
@@ -419,6 +432,7 @@
 		D001BA552C36BF8600CA5885 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 65QQ97XV3Q;
