@@ -45,6 +45,51 @@ class CacheStoreTests: XCTestCase {
         
     }
     
+    func test_insert_twice_withSuccessfullyWriteToTheStore() {
+        let sut = makeSUT()
+        let (id1, json1) = anyRates1
+        let (id2, json2) = anyRates2
+        let data1 = toData(with: json1)
+        sut.insert(withID: id1, data: data1) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(_):
+                let data2 = toData(with: json2)
+                sut.insert(withID: id2, data: data2) { result in
+                    
+                    switch result {
+                    case .success(_):
+                        sut.retrieve(withID: id1) { result in
+                            switch result {
+                            case let .success(receivedData):
+                                let retrievedJson = self.toJson(with: receivedData)
+                                XCTAssertEqual(json1, retrievedJson)
+                            default:
+                                XCTFail("Should retrieve to store successfully!")
+                            }
+                        }
+                        
+                        sut.retrieve(withID: id2) { result in
+                            switch result {
+                            case let .success(receivedData):
+                                let retrievedJson = self.toJson(with: receivedData)
+                                XCTAssertEqual(json2, retrievedJson)
+                            default:
+                                XCTFail("Should retrieve to store successfully!")
+                            }
+                        }
+                        
+                    default:
+                        XCTFail("Should insert to store successfully!")
+                    }
+                }
+                
+            default:
+                XCTFail("Should insert to store successfully!")
+            }
+        }
+    }
+    
 }
 
 private extension CacheStoreTests {
