@@ -90,6 +90,35 @@ class CacheStoreTests: XCTestCase {
         }
     }
     
+    func test_delete_withSuccessDeleteFromTheStore() {
+        let sut = makeSUT()
+        let (id, json) = anyRates1
+        let data = toData(with: json)
+        sut.insert(withID: id, data: data) { result in
+            switch result {
+            case .success(_):
+                sut.delete(withID: id)
+                
+                sut.retrieve(withID: id) { result in
+                    let expectedError = CacheStoreError.retrieveError
+                    switch result {
+                        
+                    case let .failure(receivedError):
+                        XCTAssertEqual(expectedError, receivedError)
+                        
+                    default:
+                        XCTFail("Should get retrieveError!")
+                    }
+                }
+                
+            default:
+                XCTFail("Should insert to store successfully!")
+            }
+        }
+      
+        
+     
+    }
 }
 
 private extension CacheStoreTests {
