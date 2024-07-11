@@ -83,6 +83,43 @@ class CacheStoreTests: XCTestCase {
             }
         }
     }
+    
+    func test_operations_runSerially() {
+        var operationResults = [String]()
+        let sut = makeSUT()
+        
+        let op1 = "Operation1: Insertion"
+        sut.insert(withID: anyRates1.id, json: anyRates1.json)
+        operationResults.append(op1)
+        
+        let op2 = "Operation2: Deletion"
+        sut.delete(withID: anyRates1.id)
+        operationResults.append(op2)
+        
+        let op3 = "Operation3: Insertion"
+        sut.insert(withID: anyRates2.id, json: anyRates2.json)
+        operationResults.append(op3)
+        
+        XCTAssertEqual(operationResults, [op1, op2, op3])
+        
+        sut.retrieve(withID: anyRates1.id) { result in
+            switch result {
+            case .empty:
+                break
+            default:
+                XCTFail("Fail to delete anyRate1!")
+            }
+        }
+        
+        sut.retrieve(withID: anyRates2.id) { result in
+            switch result {
+            case .found(_):
+                break
+            default:
+                XCTFail("Fail to retrieve anyRate2!")
+            }
+        }
+    }
 }
 
 private extension CacheStoreTests {
