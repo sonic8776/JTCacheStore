@@ -14,6 +14,7 @@
 		D001BA592C36CB9400CA5885 /* CacheStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D001BA582C36CB9400CA5885 /* CacheStoreTests.swift */; };
 		D04CB4412C3FFD8A00695DFB /* CacheStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04CB4402C3FFD8A00695DFB /* CacheStoreProtocol.swift */; };
 		D04CB4432C3FFDF000695DFB /* RetrieveStoreResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04CB4422C3FFDF000695DFB /* RetrieveStoreResult.swift */; };
+		D04CB4542C40058F00695DFB /* JTCacheStoreEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04CB4522C40028000695DFB /* JTCacheStoreEndToEndTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +36,7 @@
 		D001BA582C36CB9400CA5885 /* CacheStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheStoreTests.swift; sourceTree = "<group>"; };
 		D04CB4402C3FFD8A00695DFB /* CacheStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheStoreProtocol.swift; sourceTree = "<group>"; };
 		D04CB4422C3FFDF000695DFB /* RetrieveStoreResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveStoreResult.swift; sourceTree = "<group>"; };
+		D04CB4522C40028000695DFB /* JTCacheStoreEndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JTCacheStoreEndToEndTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 			children = (
 				D001BA4B2C36BF8600CA5885 /* JTCacheStoreTests.swift */,
 				D001BA582C36CB9400CA5885 /* CacheStoreTests.swift */,
+				D04CB4522C40028000695DFB /* JTCacheStoreEndToEndTests.swift */,
 			);
 			path = JTCacheStoreTests;
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 			files = (
 				D001BA592C36CB9400CA5885 /* CacheStoreTests.swift in Sources */,
 				D001BA4C2C36BF8600CA5885 /* JTCacheStoreTests.swift in Sources */,
+				D04CB4542C40058F00695DFB /* JTCacheStoreEndToEndTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
