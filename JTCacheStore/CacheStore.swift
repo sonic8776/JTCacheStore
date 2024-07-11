@@ -7,25 +7,37 @@
 
 import Foundation
 
-class CacheStore: CacheStoreProtocol, CacheStorePrivateProtocol {
-    var cache: [String: Data] = [:]
+class CacheStore: CacheStoreProtocol {
+
+    typealias Cache = [String: Any]
+    
+    var cache: Cache = [:]
     
     let storeURL: URL
     init(storeURL: URL) {
         self.storeURL = storeURL
         // retry mechanism
-        loadFromStore { _ in }
+        
+        loadFromStore { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case let .success(cache):
+                self.cache = cache
+            default:
+                // 第一次運行一定會找不到，因為 cache folder 還沒有這個 file
+                break
+            }
+        }
     }
     
-    func loadFromStore(completion: @escaping (Result<Void, CacheStoreError>) -> Void) {
+    func loadFromStore(completion: @escaping (Result<Cache, CacheStoreError>) -> Void) {
         do {
             let data = try Data(contentsOf: self.storeURL)
             let decodedData = try JSONSerialization.jsonObject(with: data, options: [])
-            if let cache = decodedData as? [String: Data] {
-                self.cache = cache
-                completion(.success(()))
+            if let cache = decodedData as? Cache {
+                completion(.success(cache))
             } else {
-                // completion with failed
+                completion(.failure(.failureLoadCache))
             }
             
         } catch {
@@ -43,40 +55,19 @@ class CacheStore: CacheStoreProtocol, CacheStorePrivateProtocol {
         }
     }
     
-    func insert(withID id: String, data: Data, completion: @escaping ((Result<Void, CacheStoreError>) -> Void)) {
-        cache[id] = data
-        // Should call saveToStore from outside
+    func insert(withID id: String, json: Any) {
+        cache[id] = json
     }
     
-    func retrieve(withID id: String, completion: @escaping ((Result<Data, CacheStoreError>) -> Void)) {
-        if let data = cache[id] {
-            completion(.success(data))
-        } else {
-            completion(.failure(.retrieveError))
+    func retrieve(withID id: String, completion: @escaping (RetrieveStoreResult) -> Void) {
+        guard let json = cache[id] else {
+            completion(.empty)
+            return
         }
+        completion(.found(json))
     }
     
     func delete(withID id: String) {
         cache.removeValue(forKey: id)
     }
-}
-
-enum CacheStoreError: Error {
-    case insertionError
-    case failureLoadCache
-    case failureSaveCache
-    case retrieveError
-}
-
-// private protocol 只有在同個 file 看得到
-private protocol CacheStorePrivateProtocol {
-    func loadFromStore(completion: @escaping (Result<Void, CacheStoreError>) -> Void)
-}
-
-protocol CacheStoreProtocol {
-    func saveToStore(completion: @escaping (Result<Void, CacheStoreError>) -> Void)
-    
-    func insert(withID id: String, data: Data, completion: @escaping ((Result<Void, CacheStoreError>) -> Void))
-    func retrieve(withID id: String, completion: @escaping ((Result<Data, CacheStoreError>) -> Void))
-    func delete(withID id: String)
 }
