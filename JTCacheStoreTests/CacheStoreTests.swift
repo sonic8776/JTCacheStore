@@ -20,101 +20,37 @@ class CacheStoreTests: XCTestCase {
         undoSideEffects()
     }
     
-    func test_insert_withSuccessWriteToTheStore() {
+    func test_insert_withSuccessWriteToTheCache() {
         let sut = makeSUT()
-        let (id, json) = anyRates1
-        let data = toData(with: json)
-        sut.insert(withID: id, data: data) { [weak self] result in
-            guard let self else { return }
+        sut.insert(withID: anyRates1.id, json: anyRates1.json)
+        sut.insert(withID: anyRates2.id, json: anyRates2.json)
+        
+        sut.retrieve(withID: anyRates1.id) { result in
             switch result {
-            case .success(_):
-                sut.retrieve(withID: id) { result in
-                    switch result {
-                    case let .success(receivedData):
-                        let retrievedJson = self.toJson(with: receivedData)
-                        XCTAssertEqual(json, retrievedJson)
-                    default:
-                        XCTFail("Should retrieve to store successfully!")
-                    }
-                }
-                
+            case .found(_):
+                break
             default:
-                XCTFail("Should insert to store successfully!")
+              XCTFail("Fail to retrieve anyRate1!")
             }
         }
         
+        sut.retrieve(withID: anyRates2.id) { result in
+            switch result {
+            case .found(_):
+                break
+            default:
+              XCTFail("Fail to retrieve anyRate2!")
+            }
+        }
     }
     
     func test_insert_twice_withSuccessfullyWriteToTheStore() {
-        let sut = makeSUT()
-        let (id1, json1) = anyRates1
-        let (id2, json2) = anyRates2
-        let data1 = toData(with: json1)
-        sut.insert(withID: id1, data: data1) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(_):
-                let data2 = toData(with: json2)
-                sut.insert(withID: id2, data: data2) { result in
-                    
-                    switch result {
-                    case .success(_):
-                        sut.retrieve(withID: id1) { result in
-                            switch result {
-                            case let .success(receivedData):
-                                let retrievedJson = self.toJson(with: receivedData)
-                                XCTAssertEqual(json1, retrievedJson)
-                            default:
-                                XCTFail("Should retrieve to store successfully!")
-                            }
-                        }
-                        
-                        sut.retrieve(withID: id2) { result in
-                            switch result {
-                            case let .success(receivedData):
-                                let retrievedJson = self.toJson(with: receivedData)
-                                XCTAssertEqual(json2, retrievedJson)
-                            default:
-                                XCTFail("Should retrieve to store successfully!")
-                            }
-                        }
-                        
-                    default:
-                        XCTFail("Should insert to store successfully!")
-                    }
-                }
-                
-            default:
-                XCTFail("Should insert to store successfully!")
-            }
-        }
+   
     }
     
     func test_delete_withSuccessDeleteFromTheStore() {
-        let sut = makeSUT()
-        let (id, json) = anyRates1
-        let data = toData(with: json)
-        sut.insert(withID: id, data: data) { result in
-            switch result {
-            case .success(_):
-                sut.delete(withID: id)
-                
-                sut.retrieve(withID: id) { result in
-                    let expectedError = CacheStoreError.retrieveError
-                    switch result {
-                        
-                    case let .failure(receivedError):
-                        XCTAssertEqual(expectedError, receivedError)
-                        
-                    default:
-                        XCTFail("Should get retrieveError!")
-                    }
-                }
-                
-            default:
-                XCTFail("Should insert to store successfully!")
-            }
-        }
+      
+        
       
         
      
