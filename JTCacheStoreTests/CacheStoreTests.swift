@@ -23,6 +23,20 @@ class CacheStoreTests: XCTestCase {
     func test_insert_withSuccessWriteToTheCache() {
         let sut = makeSUT()
         sut.insert(withID: anyRates1.id, json: anyRates1.json)
+        
+        sut.retrieve(withID: anyRates1.id) { result in
+            switch result {
+            case .found(_):
+                break
+            default:
+              XCTFail("Fail to retrieve anyRate1!")
+            }
+        }
+    }
+    
+    func test_insert_twice_withSuccessfullyWriteToTheStore() {
+        let sut = makeSUT()
+        sut.insert(withID: anyRates1.id, json: anyRates1.json)
         sut.insert(withID: anyRates2.id, json: anyRates2.json)
         
         sut.retrieve(withID: anyRates1.id) { result in
@@ -42,10 +56,6 @@ class CacheStoreTests: XCTestCase {
               XCTFail("Fail to retrieve anyRate2!")
             }
         }
-    }
-    
-    func test_insert_twice_withSuccessfullyWriteToTheStore() {
-   
     }
     
     func test_delete_withSuccessDeleteFromTheStore() {
