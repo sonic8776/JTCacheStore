@@ -29,7 +29,7 @@ class CacheStoreTests: XCTestCase {
             case .found(_):
                 break
             default:
-              XCTFail("Fail to retrieve anyRate1!")
+                XCTFail("Fail to retrieve anyRate1!")
             }
         }
     }
@@ -44,7 +44,7 @@ class CacheStoreTests: XCTestCase {
             case .found(_):
                 break
             default:
-              XCTFail("Fail to retrieve anyRate1!")
+                XCTFail("Fail to retrieve anyRate1!")
             }
         }
         
@@ -53,17 +53,35 @@ class CacheStoreTests: XCTestCase {
             case .found(_):
                 break
             default:
-              XCTFail("Fail to retrieve anyRate2!")
+                XCTFail("Fail to retrieve anyRate2!")
             }
         }
     }
     
     func test_delete_withSuccessDeleteFromTheStore() {
-      
+        let sut = makeSUT()
+        sut.insert(withID: anyRates1.id, json: anyRates1.json)
+        sut.insert(withID: anyRates2.id, json: anyRates2.json)
         
-      
+        sut.delete(withID: anyRates2.id)
         
-     
+        sut.retrieve(withID: anyRates1.id) { result in
+            switch result {
+            case .found(_):
+                break
+            default:
+                XCTFail("Fail to retrieve anyRate1!")
+            }
+        }
+        
+        sut.retrieve(withID: anyRates2.id) { result in
+            switch result {
+            case .empty:
+                break
+            default:
+                XCTFail("Fail to delete anyRate2!")
+            }
+        }
     }
 }
 
